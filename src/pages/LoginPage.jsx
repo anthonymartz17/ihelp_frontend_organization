@@ -1,24 +1,51 @@
 import React, { useState } from "react";
+import { auth } from "../../firebaseConfig";
+import { useNavigate } from "react-router-dom";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 export default function LoginPage() {
   const [forgotPassword, setForgotPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleForgotPass = () => setForgotPassword(true);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setForgotPassword(false);
+    setError("");
+
+    if (forgotPassword) {
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert("Password reset email sent!");
+      } catch (err) {
+        setError("Failed to send password reset email. Please try again.");
+      }
+    } else {
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login successful!");
+        navigate("/dashboard");
+      } catch (err) {
+        setError("Login failed. Please check your credentials.");
+      }
+    }
   };
 
   return (
     <div className="grid lg:grid-cols-[40%_60%] grid-cols-[100%] h-screen roboto-bold">
       <div className="text-[#6f6b71]">
-        <div className="lg:block absolute bottom-0 left-0 w-0 h-0 border-r-[500px] border-r-transparent border-b-[300px] border-b-[#333] hidden"></div>
         <h2 className="w-max py-[10px] px-[40px] text-[30px]">iHelp</h2>
         <div className="flex flex-col items-center justify-center lg:mt-[15%] mt-[35%]">
           <h1 className="text-[36px] mb-[6%]">
             {forgotPassword ? "Forgot Password" : "Sign in"}
           </h1>
+          {error && <p className="text-red-500">{error}</p>}
           <form
             className="flex flex-col lg:w-[55%] w-[85%] relative z-10"
             onSubmit={handleSubmit}
@@ -28,6 +55,8 @@ export default function LoginPage() {
               <input
                 required
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="py-[5px] border-[1px] border-[#7b777d] rounded-[5px]"
               />
             </label>
@@ -40,6 +69,8 @@ export default function LoginPage() {
                 <input
                   required
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="py-[5px] border-[1px] border-[#7b777d] rounded-[5px]"
                 />
               </label>
@@ -72,7 +103,7 @@ export default function LoginPage() {
         </div>
         <div className="absolute bottom-0 w-[50%] h-[50%] overflow-hidden rounded-tr-[100%] rounded-bl-none rounded-br-none rounded-tl-none">
           <img
-            src="https://shorturl.at/uL9TJ"
+            src="https:shorturl.at/uL9TJ"
             alt="Volunteers helping out with donations"
             className="w-full h-full object-cover"
           />
