@@ -63,7 +63,7 @@ export default function RewardDetailPage() {
               <strong>Quantity Available:</strong> {reward.quantity_available}
             </p>
             <p>
-              <strong>Organization:</strong> {reward.organization.name}
+              <strong>Organization:</strong> {reward.organization_id}
             </p>
           </div>
         ) : (
