@@ -5,34 +5,27 @@ export default function RequestForm({ initialData = {}, onSubmit }) {
 	const today = new Date().toISOString().split("T")[0];
 
 	const [formData, setFormData] = useState({
-		requester: initialData.requester || "",
-		category: initialData.category || "",
-		description: initialData.description || "",
-		due_date: initialData.due_date || today,
+		requester: initialData.requester || "1",
+		category: initialData.category || "4",
+		description: initialData.description || "Mr. Anderson needs help preparing his front lawn for the fall season.",
+		due_date: initialData.due_date || "2024-11-15",
 		tasks: initialData.tasks || [],
-		hours_needed: initialData.hours_needed || "",
-		event_time: initialData.event_time || "",
+		hours_needed: initialData.hours_needed || "2",
+		event_time: initialData.event_time || "10:00:00",
 	});
+
+	// const [formData, setFormData] = useState({
+	// 	requester: initialData.requester || "",
+	// 	category: initialData.category || "",
+	// 	description: initialData.description || "",
+	// 	due_date: initialData.due_date || today,
+	// 	tasks: initialData.tasks || [],
+	// 	hours_needed: initialData.hours_needed || "",
+	// 	event_time: initialData.event_time || "",
+	// });
 
 	const [taskInput, setTaskInput] = useState({ task: "", points: "" });
 	const [requesters, setRequesters] = useState([]);
-
-	// const categories = [
-	// 	{ key: 1, value: "Various" },
-	// 	{ key: 2, value: "Errands" },
-	// 	{ key: 3, value: "Technology" },
-	// 	{ key: 4, value: "Cleaning" },
-	// 	{ key: 5, value: "Pets" },
-	// 	{ key: 6, value: "Gardening" },
-	// 	{ key: 7, value: "Tutoring" },
-	// 	{ key: 8, value: "Meal Prep" },
-	// 	{ key: 9, value: "Event Setup" },
-	// 	{ key: 10, value: "Delivery" },
-	// 	{ key: 11, value: "Sports Coaching" },
-	// 	{ key: 12, value: "Crafts" },
-	// 	{ key: 13, value: "Office Assistance" },
-	// ];
-
 	const [categories, setCategories] = useState([]);
 
 	async function getCategories() {
