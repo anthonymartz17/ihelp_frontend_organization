@@ -5,13 +5,13 @@ export default function RequestForm({ initialData = {}, onSubmit }) {
 	const today = new Date().toISOString().split("T")[0];
 
 	const [formData, setFormData] = useState({
-		requester: initialData.requester || "1",
-		category: initialData.category || "4",
+		requester: initialData.requester || "",
+		category: initialData.category || "",
 		description: initialData.description || "Mr. Anderson needs help preparing his front lawn for the fall season.",
-		due_date: initialData.due_date || "2024-11-15",
+		due_date: initialData.due_date || "",
 		tasks: initialData.tasks || [],
-		hours_needed: initialData.hours_needed || "2",
-		event_time: initialData.event_time || "10:00:00",
+		hours_needed: initialData.hours_needed || "",
+		event_time: initialData.event_time || "",
 	});
 
 	// const [formData, setFormData] = useState({
