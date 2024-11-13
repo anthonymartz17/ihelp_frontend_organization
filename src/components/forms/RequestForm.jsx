@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchCategories } from "../../services/RequestServices";
+import { fetchCategories } from "../../services/requestServices";
 
 export default function RequestForm({ initialData = {}, onSubmit }) {
 	const today = new Date().toISOString().split("T")[0];

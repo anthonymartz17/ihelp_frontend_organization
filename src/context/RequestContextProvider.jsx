@@ -20,6 +20,31 @@ export function RequestContextProvider({ children }) {
 			setLoading(false);
 		}
 	}
+
+	function commitTask(request) {
+		setRequests((prev) =>
+			prev.map((req) => {
+				if (req.id === request.requestId) {
+					const updatedRequest = {
+						...req,
+						assigned_tasks: req.assigned_tasks + 1,
+					};
+					console.log(prev);
+					console.log(updatedRequest,'updated');
+
+					if (updatedRequest.assigned_tasks === updatedRequest.total_tasks) {
+						const assignedStatusId = 2;
+						updatedRequest.status_id = assignedStatusId;
+						updatedRequest.status_name = "ASSIGNED";
+					}
+					return updatedRequest;
+				} else {
+					return req;
+				}
+			})
+		);
+		console.log(requests)
+	}
 	useEffect(() => {
 		getRequests();
 	}, []);
@@ -28,8 +53,9 @@ export function RequestContextProvider({ children }) {
 		requests,
 		loading,
 		error,
-    setRequests,
-    getRequests
+		setRequests,
+		getRequests,
+		commitTask,
 	};
 
 	return (

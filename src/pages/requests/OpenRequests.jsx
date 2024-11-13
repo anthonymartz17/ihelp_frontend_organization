@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { useRequestsContext } from "../../context/RequestContextProvider";
+import socket from "../../services/socket";
 import {
 	formatDate,
 	formatMilitaryToStandardTime,
@@ -9,7 +10,7 @@ import {
 
 export default function RequestListTable() {
 	const navigate = useNavigate();
-	const { requests, loading, error } = useRequestsContext();
+	const { requests, loading, error, commitTask } = useRequestsContext();
 	const [filteredRequests, setFilteredRequests] = useState([]);
 
 	const [showModal, setShowModal] = useState(false);
@@ -32,13 +33,31 @@ export default function RequestListTable() {
 		}
 	};
 
-	useEffect(() => {
+	function filterOpenRequests() {
 		const openStatusId = 1;
 		const openRequests = requests.filter(
 			(request) => request.status_id === openStatusId
 		);
 		setFilteredRequests(openRequests.sort((a, b) => b.id - a.id));
+	}
+
+	useEffect(() => {
+		filterOpenRequests();
+
+		socket.on("requestsUpdate", (updatedRequests) => {
+			console.log(updatedRequests, "open requests");
+			switch (updatedRequests.type) {
+				case "TASK_COMMITTED":
+					commitTask(updatedRequests);
+					filterOpenRequests();
+			}
+		});
+
+		return () => {
+			socket.off("requestsUpdate");
+		};
 	}, [requests]);
+
 	return (
 		<div>
 			<div className="flex justify-between items-center mb-2">
