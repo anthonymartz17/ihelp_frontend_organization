@@ -116,7 +116,7 @@ export default function LoginPage() {
 				</div>
 				<div className="absolute bottom-0 w-[50%] h-[50%] overflow-hidden rounded-tr-[100%] rounded-bl-none rounded-br-none rounded-tl-none">
 					<img
-						src="https:shorturl.at/uL9TJ"
+						src="https://media.istockphoto.com/id/1148048200/photo/curly-beautiful-girl-working-in-voluntary-company-with-friends.jpg?s=612x612&w=0&k=20&c=2vkFbfI8wUrYXU9fUPqq1mGSbHxqsbmGL1TCHHVrJ1Y="
 						alt="Volunteers helping out with donations"
 						className="w-full h-full object-cover"
 					/>
